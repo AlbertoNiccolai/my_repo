@@ -109,6 +109,7 @@ class MainWindow(QMainWindow): #RIcorda di riaggiungere l'eredità
         general_layout.addLayout(pressable_layout)
 
         #STOP BUTTON LAYOUT
+        stop_button_layout = QHBoxLayout()
         stop_button = QPushButton("STOP")
         stop_button.setStyleSheet("""
             QPushButton {
@@ -126,10 +127,12 @@ class MainWindow(QMainWindow): #RIcorda di riaggiungere l'eredità
         """)
         stop_button.clicked.connect(self.stop_acquisition)
 
+        stop_button_layout.addWidget(stop_button)
+        general_layout.addLayout(stop_button_layout)
+
         # Set the layout for the central widget
         central_widget = QWidget()
         central_widget.setLayout(general_layout)
-        central_widget.addWidget(stop_button)
         self.setCentralWidget(central_widget)
 
     def stop_acquisition(self):
@@ -146,28 +149,28 @@ class MainWindow(QMainWindow): #RIcorda di riaggiungere l'eredità
     def refresh_settings(self):
         """Refresh the settings from the DG535 and update UI elements."""
         # Query the DG535 for the latest settings
-        self.trigger_rate = self.dg535.query("TR?").strip()
-        self.trigger_mode = self.dg535.query("TM?").strip()
-        self.trigger_slope = self.dg535.query("TS?").strip()
-        self.delay_T0 = self.dg535.query("DT? 1").strip()
-        self.delay_A = self.dg535.query("DT? 2").strip()
-        self.delay_B = self.dg535.query("DT? 3").strip()
-        self.delay_AB = self.dg535.query("DT? 4").strip()
-        self.delay_C = self.dg535.query("DT? 5").strip()
-        self.delay_D = self.dg535.query("DT? 6").strip()
-        self.delay_CD = self.dg535.query("DT? 7").strip()
+        self.trigger_rate = self.dg535.query("TR")
+        self.trigger_mode = self.dg535.query("TM")
+        self.trigger_slope = self.dg535.query("TS")
+        #self.delay_T0 = self.dg535.query("DT 1")
+        #self.delay_A = self.dg535.query("DT 2")
+        #self.delay_B = self.dg535.query("DT 3")
+        #self.delay_AB = self.dg535.query("DT 4")
+        #self.delay_C = self.dg535.query("DT 5")
+        #self.delay_D = self.dg535.query("DT 6")
+        #self.delay_CD = self.dg535.query("DT 7")
 
         # Update the UI elements
         self.trigger_label_1.setText(f"     - Trigger mode: {self.trigger_mode}.")
         self.trigger_label_2.setText(f"     - Trigger slope: {self.trigger_slope}.")
         self.trigger_label_3.setText(f"     - Trigger rate: {self.trigger_rate} Hz.")
-        self.delays_label_1.setText(f"      - T0: {self.delay_T0} s")
-        self.delays_label_2.setText(f"      - A: {self.delay_A} s")
-        self.delays_label_3.setText(f"      - B: {self.delay_B} s")
-        self.delays_label_4.setText(f"      - AB: {self.delay_AB} s")
-        self.delays_label_5.setText(f"      - C: {self.delay_C} s")
-        self.delays_label_6.setText(f"      - D: {self.delay_D} s")
-        self.delays_label_7.setText(f"      - CD: {self.delay_CD} s")
+        #self.delays_label_1.setText(f"      - T0: {self.delay_T0} s")
+        #self.delays_label_2.setText(f"      - A: {self.delay_A} s")
+        #self.delays_label_3.setText(f"      - B: {self.delay_B} s")
+        #self.delays_label_4.setText(f"      - AB: {self.delay_AB} s")
+        #self.delays_label_5.setText(f"      - C: {self.delay_C} s")
+        #self.delays_label_6.setText(f"      - D: {self.delay_D} s")
+        #self.delays_label_7.setText(f"      - CD: {self.delay_CD} s")
 
     def store_settings(self):
         """Store the current settings in a slot (1-9)."""
@@ -246,10 +249,10 @@ class SecondaryWindow(QWidget): #RIcorda di riaggiungere l'eredità
         delay_t0_layout = QHBoxLayout()
         delay_a_layout = QHBoxLayout()
         delay_b_layout = QHBoxLayout()
-        delay_ab_layout = QHBoxLayout()
+        #delay_ab_layout = QHBoxLayout()
         delay_c_layout = QHBoxLayout()
         delay_d_layout = QHBoxLayout()
-        delay_cd_layout = QHBoxLayout()
+        #delay_cd_layout = QHBoxLayout()
 
         # Create label to be shown in the central widget
         delay_info_label0 = QLabel("")
